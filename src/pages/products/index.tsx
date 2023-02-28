@@ -1,7 +1,23 @@
+// GrahpQL
+import { client } from '@/graphql/apollo.config'
+import { gql } from '@apollo/client'
+
 // Components
 import Head from 'next/head'
 
-export default function Products() {
+export async function getStaticProps() {
+  return {
+    props: {
+      products: []
+    }
+  }
+}
+
+interface ProductsProps {
+  products: []
+}
+
+export default function Products({ products }: ProductsProps) {
   return (
     <>
       <Head>
@@ -14,6 +30,7 @@ export default function Products() {
       </Head>
       <main>
         <h1>Products</h1>
+        <pre>{JSON.stringify(products, null, 2)}</pre>
       </main>
     </>
   )
