@@ -1,14 +1,24 @@
-// GrahpQL
-import { client } from '@/graphql/apollo.config'
-import { gql } from '@apollo/client'
+// GraphQL
+import client from '@/graphql/apolloClient'
+import { GET_PRODUCTS } from '@/graphql/queries'
 
 // Components
 import Head from 'next/head'
 
 export async function getStaticProps() {
+  const { data } = await client.query({ query: GET_PRODUCTS })
+
+  const products = data.nextStoreProductsCollection.items.map((product) => ({
+    id: product.sys.id,
+    name: product.name,
+    slug: product.slug,
+    rating: product.rating,
+    price: product.price
+  }))
+
   return {
     props: {
-      products: []
+      products: products
     }
   }
 }
