@@ -1,14 +1,11 @@
-type Product = {
-  id: number
-}
+import { ProductFragment } from '@/types/ProductType'
 
 export type CartContextType = {
-  cart: Product[]
+  cart: ProductFragment[]
   dispatch: React.Dispatch<CartActions>
 }
+export type CartState = ProductFragment[]
 
 export type CartActions =
-  | { type: 'ADD'; payload: { product: [] } }
-  | { type: 'DELETE'; payload: { id: number } }
-
-export type CartState = [] // TODO: create cart type / change the cart reducer type to be equal to this instead of any
+  | { type: 'ADD'; payload: { product: ProductFragment } }
+  | { type: 'DELETE'; payload: { id: string } }

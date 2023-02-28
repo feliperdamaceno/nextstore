@@ -1,20 +1,25 @@
+// Components
+import Head from 'next/head'
+
 // GraphQL
 import client from '@/graphql/apolloClient'
 import { GET_PRODUCTS } from '@/graphql/queries'
 
-// Components
-import Head from 'next/head'
+// Types
+import { ProductFragment } from '@/types/ProductType'
 
 export async function getStaticProps() {
   const { data } = await client.query({ query: GET_PRODUCTS })
 
-  const products = data.nextStoreProductsCollection.items.map((product) => ({
-    id: product.sys.id,
-    name: product.name,
-    slug: product.slug,
-    rating: product.rating,
-    price: product.price
-  }))
+  const products = data.nextStoreProductsCollection.items.map(
+    (product: any): ProductFragment => ({
+      id: product.sys.id,
+      name: product.name,
+      slug: product.slug,
+      rating: product.rating,
+      price: product.price
+    })
+  )
 
   return {
     props: {
@@ -24,10 +29,11 @@ export async function getStaticProps() {
 }
 
 interface ProductsProps {
-  products: []
+  products: ProductFragment
 }
 
 export default function Products({ products }: ProductsProps) {
+  console.log(products)
   return (
     <>
       <Head>
