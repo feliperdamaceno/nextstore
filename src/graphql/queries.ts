@@ -2,15 +2,23 @@ import { gql } from '@apollo/client'
 
 export const GET_PRODUCTS = gql`
   query getProducts {
-    nextStoreProductsCollection {
+    products: nextStoreProductsCollection {
       items {
-        sys {
+        id: sys {
           id
         }
         name
         slug
         rating
         price
+        pictures: picturesCollection {
+          collection: items {
+            title
+            url
+            width
+            height
+          }
+        }
       }
     }
   }

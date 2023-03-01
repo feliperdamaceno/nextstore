@@ -1,7 +1,7 @@
 // Components
 import Head from 'next/head'
 
-export default function Product() {
+export default function ProductPage() {
   return (
     <>
       <Head>

@@ -18,7 +18,7 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   return (
     <div
-      className={`bg-white text-zinc-900 flex flex-col min-h-screen ${fontFamily.className}`}
+      className={`bg-zinc-100 text-zinc-900 flex flex-col min-h-screen ${fontFamily.className}`}
     >
       <Navbar />
       {children}

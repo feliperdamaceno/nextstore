@@ -1,23 +1,28 @@
 // Components
 import Head from 'next/head'
+import Product from '@/components/Product'
 
 // GraphQL
 import client from '@/graphql/apolloClient'
 import { GET_PRODUCTS } from '@/graphql/queries'
 
 // Types
-import { ProductFragment } from '@/types/ProductType'
+import {
+  ProductFragment,
+  ProductFragmentResponse,
+  Picture
+} from '@/types/ProductType'
 
 export async function getStaticProps() {
   const { data } = await client.query({ query: GET_PRODUCTS })
 
-  const products = data.nextStoreProductsCollection.items.map(
-    (product: any): ProductFragment => ({
-      id: product.sys.id,
-      name: product.name,
-      slug: product.slug,
-      rating: product.rating,
-      price: product.price
+  const products = data.products.items.map(
+    (product: ProductFragmentResponse): ProductFragment => ({
+      ...product,
+      id: product.id.id,
+      pictures: product.pictures.collection.map(
+        (picture: Picture): Picture => ({ ...picture })
+      )
     })
   )
 
@@ -29,11 +34,12 @@ export async function getStaticProps() {
 }
 
 interface ProductsProps {
-  products: ProductFragment
+  products: ProductFragment[]
 }
 
-export default function Products({ products }: ProductsProps) {
+export default function ProductsPage({ products }: ProductsProps) {
   console.log(products)
+
   return (
     <>
       <Head>
@@ -44,9 +50,10 @@ export default function Products({ products }: ProductsProps) {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <main>
-        <h1>Products</h1>
-        <pre>{JSON.stringify(products, null, 2)}</pre>
+      <main className="container mx-auto px-4 sm:p-0 grid grid-cols-products gap-4">
+        {products.map((product) => (
+          <Product key={product.id} product={product} />
+        ))}
       </main>
     </>
   )
