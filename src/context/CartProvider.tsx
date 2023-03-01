@@ -9,7 +9,15 @@ const initialCart = [
     name: '',
     price: 0,
     rating: 0,
-    slug: ''
+    slug: '',
+    pictures: [
+      {
+        title: '',
+        url: '',
+        width: 0,
+        height: 0
+      }
+    ]
   }
 ]
 
