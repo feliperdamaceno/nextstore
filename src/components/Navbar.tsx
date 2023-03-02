@@ -7,7 +7,7 @@ import { IoTriangle as LogoIcon } from 'react-icons/io5'
 
 export default function Navbar() {
   return (
-    <header className="bg-white p-4 mb-4 top-0 sticky">
+    <header className="bg-white p-4 mb-4 top-0 sticky z-50">
       <nav className="container mx-auto flex justify-between items-center">
         <Link href="/" className="tracking-wider text-2xl flex items-center">
           <LogoIcon className="-translate-y-[2px] mr-0.5" />

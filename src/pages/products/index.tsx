@@ -38,8 +38,6 @@ interface ProductsProps {
 }
 
 export default function ProductsPage({ products }: ProductsProps) {
-  console.log(products)
-
   return (
     <>
       <Head>
