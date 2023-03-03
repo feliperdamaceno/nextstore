@@ -2,9 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Hide scrollbar */
-.scrollbar-none::-webkit-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  display: none;
+@layer utilities {
+  /* Hide scrollbar */
+  .scrollbar-none::-webkit-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    display: none;
+  }
 }
