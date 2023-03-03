@@ -48,7 +48,7 @@ export default function ProductsPage({ products }: ProductsProps) {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <main className="container mx-auto px-4 sm:p-0 grid grid-cols-products gap-4 max-w-xs sm:max-w-none">
+      <main className="max-w-xs sm:container mx-auto px-4 sm:p-0 grid grid-cols-products gap-4">
         {products.map((product) => (
           <Product key={product.id} product={product} />
         ))}
