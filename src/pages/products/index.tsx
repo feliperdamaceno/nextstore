@@ -1,40 +1,41 @@
 // Components
 import Head from 'next/head'
-import Product from '@/components/Product'
+import ProductCard from '@/components/ProductCard'
 
-// GraphQL
-import client from '@/graphql/apolloClient'
-import { GET_PRODUCTS } from '@/graphql/queries'
+// Libs
+import client from '@/libs/apolloClient'
+
+// Queries
+import { GetProducts } from '@/graphql/productQueries'
 
 // Types
-import {
-  ProductFragment,
-  ProductFragmentResponse,
-  Picture
-} from '@/types/ProductType'
+import { GetProductsQuery } from '@/types/queries/GetProductsQuery'
+import { Product, Picture } from '@/types/ProductType'
 
 export async function getStaticProps() {
-  const { data } = await client.query({ query: GET_PRODUCTS })
+  const { data } = await client.query<GetProductsQuery>({
+    query: GetProducts
+  })
 
   const products = data.products.items.map(
-    (product: ProductFragmentResponse): ProductFragment => ({
+    (product): Product => ({
       ...product,
       id: product.id.id,
       pictures: product.pictures.collection.map(
-        (picture: Picture): Picture => ({ ...picture })
+        (picture): Picture => ({ ...picture })
       )
     })
   )
 
   return {
     props: {
-      products: products
+      products
     }
   }
 }
 
 interface ProductsProps {
-  products: ProductFragment[]
+  products: Product[]
 }
 
 export default function ProductsPage({ products }: ProductsProps) {
@@ -48,9 +49,9 @@ export default function ProductsPage({ products }: ProductsProps) {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <main className="max-w-xs sm:container mx-auto px-4 sm:p-0 grid grid-cols-products gap-4">
+      <main className="max-w-xs sm:container mx-auto px-4 pb-4 sm:p-0 grid grid-cols-products gap-4">
         {products.map((product) => (
-          <Product key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} />
         ))}
       </main>
     </>

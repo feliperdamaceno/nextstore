@@ -1,8 +1,8 @@
-// Styles
-import { Nunito } from '@next/font/google'
-
 // Components
 import Navbar from './Navbar'
+
+// Styles
+import { Nunito } from '@next/font/google'
 
 // Types
 import { ReactNode } from 'react'

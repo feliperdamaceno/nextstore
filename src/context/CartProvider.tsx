@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useEffect, useReducer } from 'react'
 import { useStorage } from '@/hooks/useStorage'
 import { CartContextType, CartActions, CartState } from '@/types/CartTypes'
-import { ProductFragment } from '@/types/ProductType'
+import { Product } from '@/types/ProductType'
 
 const initialCart = [
   {
@@ -34,7 +34,7 @@ function reducer(state: CartState, action: CartActions): CartState {
       return [...state, action.payload.product]
     case 'DELETE':
       return state.filter(
-        (product: ProductFragment) => product.id !== action.payload.id
+        (product: Product) => product.id !== action.payload.id
       )
     default:
       return state

@@ -1,11 +1,11 @@
 // Components
 import Image from 'next/image'
 
-// Types
-import { Picture } from '@/types/ProductType'
-
 // Hooks
 import { useState } from 'react'
+
+// Types
+import { Picture } from '@/types/ProductType'
 
 interface ImagePreviewProps {
   pictures: Picture[]

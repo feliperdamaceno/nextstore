@@ -1,11 +1,11 @@
-import { ProductFragment } from '@/types/ProductType'
+import { Product } from '@/types/ProductType'
 
 export type CartContextType = {
-  cart: ProductFragment[]
+  cart: Product[]
   dispatch: React.Dispatch<CartActions>
 }
-export type CartState = ProductFragment[]
+export type CartState = Product[]
 
 export type CartActions =
-  | { type: 'ADD'; payload: { product: ProductFragment } }
+  | { type: 'ADD'; payload: { product: Product } }
   | { type: 'DELETE'; payload: { id: string } }

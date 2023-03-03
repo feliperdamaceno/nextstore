@@ -1,6 +1,3 @@
-import { ProductFragment } from '@/types/ProductType'
-import priceFormatter from '@/helpers/priceFormatter'
-
 // Components
 import Link from 'next/link'
 import Image from 'next/image'
@@ -9,11 +6,17 @@ import Image from 'next/image'
 import { MdOutlineShoppingCart as CartIcon } from 'react-icons/md'
 import { MdFavoriteBorder as FavoriteIcon } from 'react-icons/md'
 
+// Helpers
+import priceFormatter from '@/helpers/priceFormatter'
+
+// Types
+import { Product } from '@/types/ProductType'
+
 interface ProductProps {
-  product: ProductFragment
+  product: Product
 }
 
-export default function Product({ product }: ProductProps) {
+export default function ProductCard({ product }: ProductProps) {
   return (
     <section
       className="bg-white p-2 rounded-sm shadow-sm hover:scale-[102.5%] transition-transform ease-linear duration-100 overflow-hidden relative group"

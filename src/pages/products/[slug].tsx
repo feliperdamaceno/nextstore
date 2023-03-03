@@ -4,22 +4,24 @@ import List from '@/components/List'
 import Button from '@/components/Button'
 import ImagePreview from '@/components/ImagePreview'
 
-// GraphQL
-import client from '@/graphql/apolloClient'
-import { GET_SLUGS, GET_FULL_PRODUCT } from '@/graphql/queries'
+// Libs
+import client from '@/libs/apolloClient'
+
+// Queries
+import { GetSlugs, GetFullProduct } from '@/graphql/productQueries'
 
 // Types
-import { FullProduct, FullProductResponse, Picture } from '@/types/ProductType'
-import { GetStaticPropsContext } from 'next'
-
-type ProductSlug = {
-  slug: string
-}
+import {
+  GetFullProductQuery,
+  GetFullProductQueryVariables
+} from '@/types/queries/GetFullProductQuery'
+import { GetSlugsQuery } from '@/types/queries/GetSlugsQuery'
+import { FullProduct, Picture } from '@/types/ProductType'
 
 export async function getStaticPaths() {
-  const { data } = await client.query({ query: GET_SLUGS })
+  const { data } = await client.query<GetSlugsQuery>({ query: GetSlugs })
 
-  const paths = data.products.items.map((product: { slug: ProductSlug }) => ({
+  const paths = data.products.items.map((product) => ({
     params: { slug: product.slug }
   }))
 
@@ -29,14 +31,23 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params }: GetStaticPropsContext) {
-  const { data } = await client.query({
-    query: GET_FULL_PRODUCT,
-    variables: { slug: params?.slug }
+type getStaticProps = {
+  params: {
+    slug: string
+  }
+}
+
+export async function getStaticProps({ params }: getStaticProps) {
+  const { data } = await client.query<
+    GetFullProductQuery,
+    GetFullProductQueryVariables
+  >({
+    query: GetFullProduct,
+    variables: { slug: params.slug }
   })
 
   const product = data.products.items.map(
-    (product: FullProductResponse): FullProduct => ({
+    (product): FullProduct => ({
       ...product,
       pictures: product.pictures.collection.map(
         (picture): Picture => ({ ...picture })

@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client'
 
-export const GET_PRODUCTS = gql`
+export const GetProducts = gql`
   query getProducts {
     products: nextStoreProductsCollection {
       items {
@@ -24,7 +24,7 @@ export const GET_PRODUCTS = gql`
   }
 `
 
-export const GET_FULL_PRODUCT = gql`
+export const GetFullProduct = gql`
   query getFullProduct($slug: String!) {
     products: nextStoreProductsCollection(limit: 1, where: { slug: $slug }) {
       items {
@@ -48,7 +48,7 @@ export const GET_FULL_PRODUCT = gql`
   }
 `
 
-export const GET_SLUGS = gql`
+export const GetSlugs = gql`
   query getSlugs {
     products: nextStoreProductsCollection {
       items {
