@@ -1,5 +1,6 @@
 // Components
 import Navbar from './Navbar'
+import Footer from './Footer'
 
 // Styles
 import { Nunito } from '@next/font/google'
@@ -22,6 +23,7 @@ export default function Layout({ children }: LayoutProps) {
     >
       <Navbar />
       {children}
+      <Footer />
     </div>
   )
 }
