@@ -1,25 +1,28 @@
 export type Product = {
   id: string
-  name: string
-  slug: string
-  rating: number
-  price: number
-  pictures: Picture[]
+  title: string
+  handle: string
+  price: {
+    value: number
+    currency: string
+  }
+  picture: Picture
 }
 
 export type FullProduct = {
-  name: string
-  slug: string
+  title: string
   description: string
-  availability: string
-  categories: string[]
-  rating: number
-  price: number
+  availableForSale: boolean
+  tags: string[]
+  price: {
+    value: number
+    currency: string
+  }
   pictures: Picture[]
 }
 
 export type Picture = {
-  title: string
+  altText: string
   url: string
   width: number
   height: number

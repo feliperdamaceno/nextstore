@@ -34,24 +34,24 @@ export default function ProductCard({ product }: ProductProps) {
 
       <Link
         className="inline-block text-center text-sm"
-        href={`/products/${product.slug}`}
+        href={`/products/${product.handle}`}
       >
         <Image
           className="h-[240px] sm:h-[200px] object-cover bg-center"
-          src={product.pictures[0].url}
-          alt={product.pictures[0].title}
-          width={product.pictures[0].width}
-          height={product.pictures[0].height}
+          src={product.picture.url}
+          alt={product.picture.altText}
+          width={product.picture.width}
+          height={product.picture.height}
         />
 
         <div className="mt-4 mb-2">
-          <h2 className="tracking-wide mb-2" title={product.name}>
-            {product.name.length > 25
-              ? `${product.name.substring(0, 25).trim()}...`
-              : product.name}
+          <h2 className="tracking-wide mb-2" title={product.title}>
+            {product.title.length > 25
+              ? `${product.title.substring(0, 25).trim()}...`
+              : product.title}
           </h2>
           <span className="font-bold text-lg">
-            {priceFormatter(product.price, 'EUR')}
+            {priceFormatter(product.price.value, product.price.currency)}
           </span>
         </div>
       </Link>

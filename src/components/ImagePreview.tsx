@@ -64,7 +64,7 @@ export default function ImagePreview({ pictures }: ImagePreviewProps) {
           ref={previewImage}
           className="object-cover bg-center aspect-square rounded-sm"
           src={pictures[currentImage].url}
-          alt={pictures[currentImage].title}
+          alt={pictures[currentImage].altText}
           width={pictures[currentImage].width}
           height={pictures[currentImage].height}
         />
@@ -100,7 +100,7 @@ export default function ImagePreview({ pictures }: ImagePreviewProps) {
             <Image
               className="object-cover bg-center aspect-square rounded-sm"
               src={picture.url}
-              alt={picture.title}
+              alt={picture.altText}
               width={100}
               height={100}
             />

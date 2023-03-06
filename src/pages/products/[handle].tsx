@@ -15,21 +15,21 @@ import client from '@/libs/apolloClient'
 import priceFormatter from '@/helpers/priceFormatter'
 
 // Queries
-import { GetSlugs, GetFullProduct } from '@/graphql/productQueries'
+import { GetHandlers, GetFullProduct } from '@/graphql/productQueries'
 
 // Types
 import {
   GetFullProductQuery,
   GetFullProductQueryVariables
 } from '@/types/queries/GetFullProductQuery'
-import { GetSlugsQuery } from '@/types/queries/GetSlugsQuery'
+import { GetHandlersQuery } from '@/types/queries/GetHandlersQuery'
 import { FullProduct, Picture } from '@/types/ProductType'
 
 export async function getStaticPaths() {
-  const { data } = await client.query<GetSlugsQuery>({ query: GetSlugs })
+  const { data } = await client.query<GetHandlersQuery>({ query: GetHandlers })
 
-  const paths = data.products.items.map((product) => ({
-    params: { slug: product.slug }
+  const paths = data.products.nodes.map((product) => ({
+    params: { handle: product.handle }
   }))
 
   return {
@@ -40,7 +40,7 @@ export async function getStaticPaths() {
 
 type getStaticProps = {
   params: {
-    slug: string
+    handle: string
   }
 }
 
@@ -50,21 +50,24 @@ export async function getStaticProps({ params }: getStaticProps) {
     GetFullProductQueryVariables
   >({
     query: GetFullProduct,
-    variables: { slug: params.slug }
+    variables: { handle: params.handle }
   })
 
-  const product = data.products.items.map(
-    (product): FullProduct => ({
-      ...product,
-      pictures: product.pictures.collection.map(
-        (picture): Picture => ({ ...picture })
-      )
-    })
-  )
+  const product = {
+    title: data.product.title,
+    description: data.product.description,
+    availableForSale: data.product.availableForSale,
+    tags: data.product.tags,
+    price: {
+      value: parseFloat(data.product.priceRange.minVariantPrice.amount),
+      currency: data.product.priceRange.minVariantPrice.currencyCode
+    },
+    pictures: data.product.images.nodes.map((image): Picture => ({ ...image }))
+  }
 
   return {
     props: {
-      product: product[0]
+      product
     }
   }
 }
@@ -77,7 +80,7 @@ export default function ProductPage({ product }: ProductPageProps) {
   return (
     <>
       <Head>
-        <title>{product.name}</title>
+        <title>{product.title}</title>
         <meta name="description" content={product.description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -85,32 +88,34 @@ export default function ProductPage({ product }: ProductPageProps) {
         <ImagePreview pictures={product.pictures} />
 
         <aside className="max-w-xl lg:max-w-md p-2">
-          <h1 className="font-bold text-xl mb-2">{product.name}</h1>
+          <h1 className="font-bold text-xl mb-2">{product.title}</h1>
 
           <div className="flex gap-2 mb-2 text-sm">
             <span>Availability:</span>
-            <span className="text-green-600">{product.availability}</span>
+            {product.availableForSale ? (
+              <span className="text-green-600">In Stock</span>
+            ) : (
+              <span className="text-red-600">Out of Stock</span>
+            )}
           </div>
 
-          <div className="mb-4">
-            <Rating rating={product.rating} />
-          </div>
+          <div className="mb-4">{/* <Rating rating={product.rating} /> */}</div>
 
           <h2 className="text-2xl font-bold mb-4">
-            {priceFormatter(product.price, 'EUR')}
+            {priceFormatter(product.price.value, product.price.currency)}
           </h2>
 
           <p className="mb-2">{product.description}</p>
 
           <ul className="flex flex-wrap gap-2 mb-6">
             <List
-              items={product.categories}
-              render={(category, index) => (
+              items={product.tags}
+              render={(tag, index) => (
                 <li
                   className="px-2 py-1 bg-zinc-200 rounded-sm text-sm"
                   key={index}
                 >
-                  {category}
+                  {tag}
                 </li>
               )}
             />

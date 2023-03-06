@@ -1,12 +1,12 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 
-const API_URI = `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`
+const API_URI = `https://${process.env.SHOPIFY_DOMAIN_NAME}/api/2023-01/graphql.json`
 
 const client = new ApolloClient({
   uri: API_URI,
   cache: new InMemoryCache(),
   headers: {
-    Authorization: `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`
+    'X-Shopify-Storefront-Access-Token': `${process.env.SHOPIFY_ACCESS_TOKEN}`
   }
 })
 

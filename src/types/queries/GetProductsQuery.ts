@@ -2,17 +2,17 @@ import { Picture } from '@/types/ProductType'
 
 export type GetProductsQuery = {
   products: {
-    items: {
-      id: {
-        id: string
+    nodes: {
+      id: string
+      title: string
+      handle: string
+      priceRange: {
+        minVariantPrice: {
+          amount: string
+          currencyCode: string
+        }
       }
-      name: string
-      slug: string
-      rating: number
-      price: number
-      pictures: {
-        collection: Picture[]
-      }
+      featuredImage: Picture
     }[]
   }
 }

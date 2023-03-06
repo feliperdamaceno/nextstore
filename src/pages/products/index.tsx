@@ -10,20 +10,23 @@ import { GetProducts } from '@/graphql/productQueries'
 
 // Types
 import { GetProductsQuery } from '@/types/queries/GetProductsQuery'
-import { Product, Picture } from '@/types/ProductType'
+import { Product } from '@/types/ProductType'
 
 export async function getStaticProps() {
   const { data } = await client.query<GetProductsQuery>({
     query: GetProducts
   })
 
-  const products = data.products.items.map(
+  const products = data.products.nodes.map(
     (product): Product => ({
-      ...product,
-      id: product.id.id,
-      pictures: product.pictures.collection.map(
-        (picture): Picture => ({ ...picture })
-      )
+      id: product.id,
+      title: product.title,
+      handle: product.handle,
+      price: {
+        value: parseFloat(product.priceRange.minVariantPrice.amount),
+        currency: product.priceRange.minVariantPrice.currencyCode
+      },
+      picture: product.featuredImage
     })
   )
 

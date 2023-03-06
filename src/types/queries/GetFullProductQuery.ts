@@ -1,22 +1,23 @@
 import { Picture } from '@/types/ProductType'
 
 export type GetFullProductQuery = {
-  products: {
-    items: {
-      name: string
-      slug: string
-      description: string
-      availability: string
-      categories: string[]
-      rating: number
-      price: number
-      pictures: {
-        collection: Picture[]
+  product: {
+    title: string
+    description: string
+    availableForSale: boolean
+    tags: string[]
+    priceRange: {
+      minVariantPrice: {
+        amount: string
+        currencyCode: string
       }
-    }[]
+    }
+    images: {
+      nodes: Picture[]
+    }
   }
 }
 
 export type GetFullProductQueryVariables = {
-  slug: string
+  handle: string
 }
