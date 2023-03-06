@@ -112,7 +112,7 @@ export default function ProductPage({ product }: ProductPageProps) {
               items={product.tags}
               render={(tag, index) => (
                 <li
-                  className="px-2 py-1 bg-zinc-200 rounded-sm text-sm"
+                  className="px-2 py-1 bg-zinc-200 rounded-sm text-sm shadow-sm"
                   key={index}
                 >
                   {tag}

@@ -6,18 +6,18 @@ import { Product } from '@/types/ProductType'
 const initialCart = [
   {
     id: '',
-    name: '',
-    price: 0,
-    rating: 0,
-    slug: '',
-    pictures: [
-      {
-        title: '',
-        url: '',
-        width: 0,
-        height: 0
-      }
-    ]
+    title: '',
+    handle: '',
+    price: {
+      value: 0,
+      currency: ''
+    },
+    picture: {
+      altText: '',
+      url: '',
+      width: 0,
+      height: 0
+    }
   }
 ]
 
