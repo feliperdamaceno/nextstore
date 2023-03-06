@@ -3,7 +3,6 @@ import Head from 'next/head'
 import List from '@/components/List'
 import Button from '@/components/Button'
 import ImagePreview from '@/components/ImagePreview'
-import Rating from '@/components/Rating'
 
 // Styles
 import { MdFavoriteBorder as FavoriteIcon } from 'react-icons/md'
@@ -68,7 +67,8 @@ export async function getStaticProps({ params }: getStaticProps) {
   return {
     props: {
       product
-    }
+    },
+    revalidate: 60
   }
 }
 
@@ -98,8 +98,6 @@ export default function ProductPage({ product }: ProductPageProps) {
               <span className="text-red-600">Out of Stock</span>
             )}
           </div>
-
-          <div className="mb-4">{/* <Rating rating={product.rating} /> */}</div>
 
           <h2 className="text-2xl font-bold mb-4">
             {priceFormatter(product.price.value, product.price.currency)}
