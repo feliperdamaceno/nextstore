@@ -2,11 +2,15 @@
 import Link from 'next/link'
 
 // Styles
-import { MdOutlineShoppingCart as CartIcon } from 'react-icons/md'
+import { HiOutlineShoppingBag as CartIcon } from 'react-icons/hi'
 import { FiUser as UserIcon } from 'react-icons/fi'
 import { IoTriangle as LogoIcon } from 'react-icons/io5'
+import { useContext } from 'react'
+import { CartContext } from '@/context/CartProvider'
 
 export default function Navbar() {
+  const { toggleCart } = useContext(CartContext)
+
   return (
     <header className="bg-white p-4 mb-4 top-0 sticky z-50 shadow-sm">
       <nav className="container mx-auto flex justify-between items-center">
@@ -32,7 +36,7 @@ export default function Navbar() {
             <UserIcon />
           </Link>
 
-          <button>
+          <button onClick={() => toggleCart(true)}>
             <CartIcon />
           </button>
         </div>

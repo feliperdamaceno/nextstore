@@ -1,5 +1,9 @@
+// Hooks
 import { createContext, ReactNode, useEffect, useReducer } from 'react'
 import { useStorage } from '@/hooks/useStorage'
+import { useToggle } from '@/hooks/useToggle'
+
+// Types
 import { CartContextType, CartActions, CartState } from '@/types/CartTypes'
 import { Product } from '@/types/ProductType'
 
@@ -21,12 +25,7 @@ const initialCart = [
   }
 ]
 
-const initialContext = {
-  cart: initialCart,
-  dispatch: () => {}
-}
-
-const CartContext = createContext<CartContextType>(initialContext)
+export const CartContext = createContext<CartContextType>(null!)
 
 function reducer(state: CartState, action: CartActions): CartState {
   switch (action.type) {
@@ -48,13 +47,14 @@ interface CartProviderProps {
 export default function CartProvider({ children }: CartProviderProps) {
   const { storage, updateStorage } = useStorage('store-cart', initialCart)
   const [cart, dispatch] = useReducer(reducer, storage)
+  const { value: isCartOpen, toggleValue: toggleCart } = useToggle(false)
 
   useEffect(() => {
     updateStorage(cart)
   }, [cart])
 
   return (
-    <CartContext.Provider value={{ cart, dispatch }}>
+    <CartContext.Provider value={{ cart, dispatch, isCartOpen, toggleCart }}>
       {children}
     </CartContext.Provider>
   )

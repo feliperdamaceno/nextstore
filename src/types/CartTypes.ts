@@ -3,6 +3,8 @@ import { Product } from '@/types/ProductType'
 export type CartContextType = {
   cart: Product[]
   dispatch: React.Dispatch<CartActions>
+  isCartOpen: boolean
+  toggleCart: (value: boolean) => void
 }
 export type CartState = Product[]
 
