@@ -10,7 +10,7 @@ import { GetProducts } from '@/graphql/productQueries'
 
 // Types
 import { GetProductsQuery } from '@/types/queries/GetProductsQuery'
-import { Product } from '@/types/ProductType'
+import { Product } from '@/types/ProductTypes'
 
 export async function getStaticProps() {
   const { data } = await client.query<GetProductsQuery>({

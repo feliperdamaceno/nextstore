@@ -13,6 +13,11 @@ import client from '@/libs/apolloClient'
 // Helpers
 import priceFormatter from '@/helpers/priceFormatter'
 
+import { CartContext } from '@/context/CartProvider'
+
+// Hooks
+import { useContext } from 'react'
+
 // Queries
 import { GetHandlers, GetFullProduct } from '@/graphql/productQueries'
 
@@ -22,7 +27,7 @@ import {
   GetFullProductQueryVariables
 } from '@/types/queries/GetFullProductQuery'
 import { GetHandlersQuery } from '@/types/queries/GetHandlersQuery'
-import { FullProduct, Picture } from '@/types/ProductType'
+import { FullProduct, Picture, CartProduct } from '@/types/ProductTypes'
 
 export async function getStaticPaths() {
   const { data } = await client.query<GetHandlersQuery>({ query: GetHandlers })
@@ -52,9 +57,10 @@ export async function getStaticProps({ params }: getStaticProps) {
     variables: { handle: params.handle }
   })
 
-  const product = {
+  const product: FullProduct = {
     id: data.product.variants.nodes[0].id,
     title: data.product.title,
+    handle: data.product.handle,
     description: data.product.description,
     availableForSale: data.product.availableForSale,
     tags: data.product.tags,
@@ -78,6 +84,21 @@ interface ProductPageProps {
 }
 
 export default function ProductPage({ product }: ProductPageProps) {
+  const { dispatch } = useContext(CartContext)
+  const cartProduct: CartProduct = {
+    id: product.id,
+    title: product.title,
+    handle: product.handle,
+    tags: [...product.tags],
+    price: { ...product.price },
+    picture: product.pictures[0],
+    quantity: 1
+  }
+
+  function addToCart() {
+    dispatch({ type: 'ADD', payload: { product: cartProduct } })
+  }
+
   return (
     <>
       <Head>
@@ -126,6 +147,7 @@ export default function ProductPage({ product }: ProductPageProps) {
               render={(styles) => (
                 <button
                   disabled={!product.availableForSale}
+                  onClick={addToCart}
                   className={`${styles} text-lg w-full`}
                 >
                   Add to Cart

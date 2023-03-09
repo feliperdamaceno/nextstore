@@ -10,7 +10,7 @@ import { MdFavoriteBorder as FavoriteIcon } from 'react-icons/md'
 import priceFormatter from '@/helpers/priceFormatter'
 
 // Types
-import { Product } from '@/types/ProductType'
+import { Product } from '@/types/ProductTypes'
 
 interface ProductProps {
   product: Product

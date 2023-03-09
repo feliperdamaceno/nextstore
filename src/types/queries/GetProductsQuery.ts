@@ -1,4 +1,4 @@
-import { Picture } from '@/types/ProductType'
+import { Picture } from '@/types/ProductTypes'
 
 export type GetProductsQuery = {
   products: {

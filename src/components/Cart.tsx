@@ -1,10 +1,14 @@
 // Components
+import Link from 'next/link'
 import List from './List'
-import CartProduct from './CartProduct'
+import CartProductCard from './CartProductCard'
 import Button from './Button'
 
 // Styles
 import { IoCloseOutline as CloseIcon } from 'react-icons/io5'
+
+// Helpers
+import priceFormatter from '@/helpers/priceFormatter'
 
 // Libs
 import { useSwipeable } from 'react-swipeable'
@@ -16,10 +20,10 @@ import { CartContext } from '@/context/CartProvider'
 import { useContext } from 'react'
 
 //  Types
-import { Product } from '@/types/ProductType'
+import { CartProduct } from '@/types/ProductTypes'
 
 export default function Cart() {
-  const { isCartOpen, toggleCart } = useContext(CartContext)
+  const { cart, isCartOpen, toggleCart } = useContext(CartContext)
   const swipeHandlers = useSwipeable({
     onSwipedRight: closeCart
   })
@@ -27,6 +31,8 @@ export default function Cart() {
     ? 'opacity-100'
     : 'opacity-0 invisible'
   const cartToggleAnimation = isCartOpen ? 'translate-x-0' : 'translate-x-full'
+  const isCartEmpty = cart.length === 0
+  const subtotal = cart.reduce((prev, curr) => prev + curr.price.value, 0)
 
   function closeCart() {
     toggleCart(false)
@@ -64,10 +70,18 @@ export default function Cart() {
 
               <div className="mt-8 flow-root">
                 <ul className="-my-6 divide-y divide-zinc-200">
-                  <List
-                    items={[1, 2, 3]}
-                    render={(product) => <CartProduct product={product} />}
-                  />
+                  {isCartEmpty ? (
+                    <li className="text-sm font-light text-zinc-400">
+                      Your cart is empty!
+                    </li>
+                  ) : (
+                    <List
+                      items={cart}
+                      render={(product: CartProduct, index) => (
+                        <CartProductCard key={index} product={product} />
+                      )}
+                    />
+                  )}
                 </ul>
               </div>
             </div>
@@ -75,7 +89,7 @@ export default function Cart() {
             <div className="border-t border-zinc-200 py-6 px-4 sm:px-6">
               <div className="flex justify-between text-base font-semibold">
                 <p>Subtotal</p>
-                <p className="font-bold">$270.00</p>
+                <p className="font-bold">{priceFormatter(subtotal, 'EUR')}</p>
               </div>
               <div className="mt-6">
                 <Button
@@ -89,7 +103,9 @@ export default function Cart() {
               </div>
               <div className="mt-6 flex justify-center text-center text-sm  gap-1">
                 <span className="text-zinc-500">or </span>
-                <button className="font-bold">Continue Shopping &rarr;</button>
+                <Link href="/products" className="font-bold">
+                  Continue Shopping &rarr;
+                </Link>
               </div>
             </div>
           </div>

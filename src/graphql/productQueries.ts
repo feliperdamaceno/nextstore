@@ -37,6 +37,7 @@ export const GetFullProduct = gql`
         }
       }
       title
+      handle
       description
       availableForSale
       tags

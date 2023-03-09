@@ -1,4 +1,4 @@
-import { Picture } from '@/types/ProductType'
+import { Picture } from '@/types/ProductTypes'
 
 export type GetFullProductQuery = {
   product: {
@@ -11,6 +11,7 @@ export type GetFullProductQuery = {
     }
     title: string
     description: string
+    handle: string
     availableForSale: boolean
     tags: string[]
     priceRange: {

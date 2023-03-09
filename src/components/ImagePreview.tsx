@@ -12,7 +12,7 @@ import { useSwipeable } from 'react-swipeable'
 import { useState, useRef, useEffect } from 'react'
 
 // Types
-import { Picture } from '@/types/ProductType'
+import { Picture } from '@/types/ProductTypes'
 
 interface ImagePreviewProps {
   pictures: Picture[]

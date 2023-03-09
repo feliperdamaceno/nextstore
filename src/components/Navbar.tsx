@@ -8,8 +8,22 @@ import { IoTriangle as LogoIcon } from 'react-icons/io5'
 import { useContext } from 'react'
 import { CartContext } from '@/context/CartProvider'
 
+// Hooks
+import { useEffect, useRef } from 'react'
+
 export default function Navbar() {
-  const { toggleCart } = useContext(CartContext)
+  const { cart, toggleCart } = useContext(CartContext)
+  const cartAnimation = useRef<HTMLButtonElement>(null!)
+
+  useEffect(() => {
+    cartAnimation.current.classList.add('scale-105', 'opacity-10')
+  }, [cart])
+
+  useEffect(() => {
+    cartAnimation.current.addEventListener('transitionend', () => {
+      cartAnimation.current.classList.remove('scale-105', 'opacity-10')
+    })
+  }, [])
 
   return (
     <header className="bg-white p-4 mb-4 top-0 sticky z-50 shadow-sm">
@@ -36,7 +50,11 @@ export default function Navbar() {
             <UserIcon />
           </Link>
 
-          <button onClick={() => toggleCart(true)}>
+          <button
+            ref={cartAnimation}
+            className="transition-all ease-linear duration-150"
+            onClick={() => toggleCart(true)}
+          >
             <CartIcon />
           </button>
         </div>
