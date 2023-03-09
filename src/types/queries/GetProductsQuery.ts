@@ -3,7 +3,13 @@ import { Picture } from '@/types/ProductType'
 export type GetProductsQuery = {
   products: {
     nodes: {
-      id: string
+      variants: {
+        nodes: [
+          {
+            id: string
+          }
+        ]
+      }
       title: string
       handle: string
       priceRange: {

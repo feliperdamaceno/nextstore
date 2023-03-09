@@ -6,6 +6,9 @@ import Button from './Button'
 // Styles
 import { IoCloseOutline as CloseIcon } from 'react-icons/io5'
 
+// Libs
+import { useSwipeable } from 'react-swipeable'
+
 // Context
 import { CartContext } from '@/context/CartProvider'
 
@@ -17,8 +20,11 @@ import { Product } from '@/types/ProductType'
 
 export default function Cart() {
   const { isCartOpen, toggleCart } = useContext(CartContext)
+  const swipeHandlers = useSwipeable({
+    onSwipedRight: closeCart
+  })
   const backdropToggleAnimation = isCartOpen
-    ? 'opacity-1'
+    ? 'opacity-100'
     : 'opacity-0 invisible'
   const cartToggleAnimation = isCartOpen ? 'translate-x-0' : 'translate-x-full'
 
@@ -31,8 +37,10 @@ export default function Cart() {
       className="relative z-[100]"
       aria-label="cart"
       aria-modal={isCartOpen}
+      {...swipeHandlers}
     >
       <div
+        onClick={closeCart}
         className={`fixed inset-0 bg-zinc-500 bg-opacity-75 transition-all ease-linear duration-200 ${backdropToggleAnimation}`}
       />
 

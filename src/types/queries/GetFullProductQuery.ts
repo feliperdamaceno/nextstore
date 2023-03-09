@@ -2,6 +2,13 @@ import { Picture } from '@/types/ProductType'
 
 export type GetFullProductQuery = {
   product: {
+    variants: {
+      nodes: [
+        {
+          id: string
+        }
+      ]
+    }
     title: string
     description: string
     availableForSale: boolean

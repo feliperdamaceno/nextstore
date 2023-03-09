@@ -4,7 +4,11 @@ export const GetProducts = gql`
   query GetProducts {
     products(first: 100) {
       nodes {
-        id
+        variants(first: 1) {
+          nodes {
+            id
+          }
+        }
         title
         handle
         priceRange {
@@ -27,6 +31,11 @@ export const GetProducts = gql`
 export const GetFullProduct = gql`
   query getFullProduct($handle: String!) {
     product(handle: $handle) {
+      variants(first: 1) {
+        nodes {
+          id
+        }
+      }
       title
       description
       availableForSale

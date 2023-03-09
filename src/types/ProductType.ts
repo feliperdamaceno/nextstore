@@ -10,6 +10,7 @@ export type Product = {
 }
 
 export type FullProduct = {
+  id: string
   title: string
   description: string
   availableForSale: boolean

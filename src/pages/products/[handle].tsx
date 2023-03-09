@@ -53,6 +53,7 @@ export async function getStaticProps({ params }: getStaticProps) {
   })
 
   const product = {
+    id: data.product.variants.nodes[0].id,
     title: data.product.title,
     description: data.product.description,
     availableForSale: data.product.availableForSale,
@@ -123,7 +124,10 @@ export default function ProductPage({ product }: ProductPageProps) {
             <Button
               variant="regular"
               render={(styles) => (
-                <button className={`${styles} text-lg w-full`}>
+                <button
+                  disabled={!product.availableForSale}
+                  className={`${styles} text-lg w-full`}
+                >
                   Add to Cart
                 </button>
               )}

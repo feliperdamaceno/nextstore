@@ -60,7 +60,7 @@ export default function ImagePreview({ pictures }: ImagePreviewProps) {
         {...swipeHandlers}
         className="p-2 select-none relative grid place-items-center group"
       >
-        <Image
+        <img
           ref={previewImage}
           className="object-cover bg-center aspect-square rounded-sm"
           src={pictures[currentImage].url}

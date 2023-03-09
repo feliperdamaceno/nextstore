@@ -19,7 +19,7 @@ export async function getStaticProps() {
 
   const products = data.products.nodes.map(
     (product): Product => ({
-      id: product.id,
+      id: product.variants.nodes[0].id,
       title: product.title,
       handle: product.handle,
       price: {
