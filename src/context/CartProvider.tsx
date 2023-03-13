@@ -1,5 +1,5 @@
 // Helpers
-import countCartProducts from '@/helpers/countCartProducts'
+import calculateCartProductsQuantity from '@/helpers/calculateCartProductsQuantity'
 
 // Hooks
 import { createContext, useReducer, ReactNode } from 'react'
@@ -14,7 +14,7 @@ export const CartContext = createContext<CartContextType>(null!)
 function reducer(state: CartState, action: CartActions): CartState {
   switch (action.type) {
     case 'ADD':
-      return countCartProducts([...state, action.payload.product])
+      return calculateCartProductsQuantity([...state, action.payload.product])
     case 'DELETE':
       const currentProductIndex = state.findIndex(
         (product: CartProduct) => product.id === action.payload.id

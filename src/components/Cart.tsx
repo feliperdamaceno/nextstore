@@ -9,6 +9,7 @@ import { IoCloseOutline as CloseIcon } from 'react-icons/io5'
 
 // Helpers
 import priceFormatter from '@/helpers/priceFormatter'
+import calculateCartSubtotal from '@/helpers/calculateCartSubtotal'
 
 // Libs
 import { useSwipeable } from 'react-swipeable'
@@ -32,7 +33,7 @@ export default function Cart() {
     : 'opacity-0 invisible'
   const cartToggleAnimation = isCartOpen ? 'translate-x-0' : 'translate-x-full'
   const isCartEmpty = cart.length === 0
-  const subtotal = cart.reduce((prev, curr) => prev + curr.price.value, 0)
+  const subtotal = calculateCartSubtotal(cart)
 
   function closeCart() {
     toggleCart(false)

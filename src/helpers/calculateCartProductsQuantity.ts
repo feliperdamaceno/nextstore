@@ -1,6 +1,6 @@
 import { CartProduct } from '@/types/ProductTypes'
 
-export default function countCartProducts(
+export default function calculateCartProductsQuantity(
   products: CartProduct[]
 ): CartProduct[] {
   const output: CartProduct[] = []
