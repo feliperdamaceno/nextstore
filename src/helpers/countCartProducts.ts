@@ -9,9 +9,9 @@ export default function countCartProducts(
     const existingItem = output.find((item) => item.id === product.id)
     if (existingItem) {
       existingItem.quantity += 1
-    } else {
-      output.push({ ...product, quantity: 1 })
+      return
     }
+    output.push({ ...product })
   })
 
   return output

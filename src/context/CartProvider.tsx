@@ -16,8 +16,17 @@ function reducer(state: CartState, action: CartActions): CartState {
     case 'ADD':
       return countCartProducts([...state, action.payload.product])
     case 'DELETE':
-      return countCartProducts(
-        state.filter((product: CartProduct) => product.id !== action.payload.id)
+      const currentProductIndex = state.findIndex(
+        (product: CartProduct) => product.id === action.payload.id
+      )
+
+      if (state[currentProductIndex].quantity > 1) {
+        state[currentProductIndex].quantity -= 1
+        return [...state]
+      }
+
+      return state.filter(
+        (product: CartProduct) => product.id !== action.payload.id
       )
     default:
       return state
